@@ -1,0 +1,11 @@
+node_modules/
+build/
+dist/
+dist-personal/
+src/data/cards.personal.ts
+coverage/
+.DS_Store
+*.log
+.env*
+!.env
+!.env.example
