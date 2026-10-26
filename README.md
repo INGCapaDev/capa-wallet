@@ -13,7 +13,7 @@ Capa Wallet is an interactive, browser-based demo for displaying and sharing tra
 <details>
 <summary>Mobile preview</summary>
 
-<img src="docs/images/mobile.png" alt="Capa Wallet mobile demo with fictional card details and copy and share controls" width="390" />
+<img src="docs/images/mobile.png" alt="Capa Wallet mobile focused-card view with fictional card details and copy and share controls" width="390" />
 
 </details>
 
