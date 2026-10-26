@@ -50,6 +50,6 @@ Shared product and showcase roadmap for Capa Wallet. These entries describe defe
   - Document Pages custom-domain association and DNS prerequisites. Deployments, domain association, and DNS mutations require separate authorization; do not claim either site is live before checking it.
 
 - [ ] Verify social-sharing previews for the deployed showcase.
-  - The Dynamic Deck kit, initial-HTML metadata, absolute build-time image URLs, favicon, header mark, and manifest are integrated. Verify their deployed responses, canonical origin, image content types, and platform caches before claiming live previews work.
+  - The Dynamic Deck kit, initial-HTML metadata, absolute build-time image URLs, favicon, and header mark are integrated. Verify their deployed responses, canonical origin, image content types, and platform caches before claiming live previews work.
   - Use demo-safe preview text and imagery with no real banking identifiers. Decide whether focused-card links need distinct previews or the shared showcase preview when implementing those routes.
   - Verify previews on the deployed host while coordinating crawler directives with the discoverability entry above; do not promise working social previews while blocking the fetchers they require.

@@ -9,7 +9,7 @@ The Dynamic Deck brand kit supplies one app-wide social preview. Its illustrated
 - `public/social/capa-wallet-square.png`, `capa-wallet-square-1080.png`, `capa-wallet-portrait-1080x1350.png`, and `capa-wallet-story-1080x1920.png`: separately composed manual-post exports. They are not loaded into the app's visible UI.
 - `public/icons/header-icon-128.png`: transparent decorative header logo, rendered at 24–28 CSS pixels. Additional supplied sizes and `wallet-mark.svg` are retained as ready-to-use brand variants.
 - `public/favicon.svg`, `favicon.ico`, and `icons/favicon-*.png`: browser-tab variants.
-- `public/apple-touch-icon.png`, `site.webmanifest`, and `icons/app-icon-*.png`: bookmark/manifest assets. A web manifest alone does not add offline support; no service worker is installed.
+- `public/apple-touch-icon.png` and `icons/app-icon-*.png`: retained bookmark and brand assets. No web app manifest or service worker is provided; the site is not offered as an installable PWA.
 
 The supplied public assets are kept byte-for-byte. Source masters, import instructions, previews, and the consumed archive are not needed by the application.
 
