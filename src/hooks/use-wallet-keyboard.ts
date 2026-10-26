@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import type { BankCardData } from '@/types/card';
+import { useCardKeyboard } from '@/hooks/use-card-keyboard';
 
 interface WalletKeyboardOptions {
   cards: readonly BankCardData[];
@@ -18,6 +19,8 @@ export function useWalletKeyboard({
   onNavigateCard,
   onSelectCard,
 }: WalletKeyboardOptions) {
+  useCardKeyboard({ onCopyClabe, onFlipCard, onToggleSound });
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const activeTag = document.activeElement?.tagName;
@@ -25,18 +28,6 @@ export function useWalletKeyboard({
 
       const key = event.key.toLowerCase();
       switch (key) {
-        case 'c':
-          event.preventDefault();
-          onCopyClabe();
-          return;
-        case 'f':
-          event.preventDefault();
-          onFlipCard();
-          return;
-        case 'm':
-          event.preventDefault();
-          onToggleSound();
-          return;
         case 'arrowright':
           event.preventDefault();
           onNavigateCard(1);
@@ -57,5 +48,5 @@ export function useWalletKeyboard({
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [cards, onCopyClabe, onFlipCard, onToggleSound, onNavigateCard, onSelectCard]);
+  }, [cards, onNavigateCard, onSelectCard]);
 }
