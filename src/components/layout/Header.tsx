@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button';
 import { AppConfig } from '@/config';
-import { Volume2, VolumeX } from 'lucide-react';
+import { CreditCard, Volume2, VolumeX } from 'lucide-react';
 
 export interface HeaderProps {
   soundEnabled: boolean;
@@ -15,14 +15,7 @@ export function Header({
     <header className="w-full bg-transparent select-none z-40">
       <div className="max-w-6xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between relative">
         <div className="flex items-center text-slate-400">
-          <img
-            src="/icons/header-icon-128.png"
-            alt=""
-            width={28}
-            height={28}
-            decoding="async"
-            className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
-          />
+          <CreditCard className="w-4 h-4" />
         </div>
 
         <div className="absolute left-1/2 -translate-x-1/2 flex items-center pointer-events-none select-none">
