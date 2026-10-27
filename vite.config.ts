@@ -1,12 +1,13 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
-import { defineConfig, loadEnv } from 'vite';
+import { parseEnv } from 'node:util';
+import { defineConfig } from 'vite';
 import { parseSiteOrigin } from './src/config/env.ts';
 import {
   MissingPersonalCardsError,
-  MissingPersonalOriginError,
+  MissingPersonalEnvironmentError,
 } from './src/errors/configuration.errors.ts';
 
 export default defineConfig(({ mode }) => {
@@ -20,17 +21,16 @@ export default defineConfig(({ mode }) => {
     throw new MissingPersonalCardsError();
   }
 
-  const hasPersonalEnv = ['.env.personal', '.env.personal.local'].some((file) =>
-    existsSync(path.resolve(import.meta.dirname, file)),
-  );
-  if (isPersonal && !hasPersonalEnv && !process.env.VITE_SITE_ORIGIN) {
-    throw new MissingPersonalOriginError();
-  }
-
-  const environment = loadEnv(mode, import.meta.dirname, 'VITE_');
-  parseSiteOrigin(environment.VITE_SITE_ORIGIN);
+  const envFile = path.resolve(import.meta.dirname, isPersonal ? '.env.personal' : '.env');
+  if (isPersonal && !existsSync(envFile)) throw new MissingPersonalEnvironmentError();
+  const environment = parseEnv(readFileSync(envFile, 'utf8'));
+  const origin = parseSiteOrigin(process.env.VITE_SITE_ORIGIN ?? environment.VITE_SITE_ORIGIN);
 
   return {
+    envDir: false,
+    define: {
+      'import.meta.env.VITE_SITE_ORIGIN': JSON.stringify(origin),
+    },
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

@@ -45,6 +45,12 @@ Open [http://localhost:3000](http://localhost:3000).
 | `pnpm build` | Build the demo |
 | `pnpm preview` | Preview the built demo |
 
+## Deployment variants
+
+One repository supports the fictional demo and an optional personal wallet, without duplicating application code. Personal data stays in ignored local files; it is never required for demo development or builds. After connecting the repository in Cloudflare Pages, pushes and merges to `main` automatically deploy the demo through its native Git integration.
+
+See [personal data setup](docs/personal-data.md) for `pnpm dev:personal` and [Cloudflare Pages deployment](docs/cloudflare-pages.md) for independent local deployments, stable versions, and rollback. Personal deployment is local-only; no personal data or credentials belong in GitHub Actions.
+
 ## 📃 License
 
 No open-source license has been selected. Public repository visibility alone does not grant permission to use, modify, or distribute this project.

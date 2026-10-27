@@ -16,7 +16,7 @@ These commands use the tracked `src/data/cards.demo.ts` dataset. The build write
 
 1. Create `src/data/cards.personal.ts` by copying `src/data/cards.demo.ts`, unless your personal file already exists.
 2. Edit only the personal file to add your cardholder names, transfer identifiers, and card endings. Preserve its `BANK_CARDS` export and nonempty tuple type, and use design variants from `src/data/card-designs.ts`. Keep card IDs unique.
-3. Create a Git-ignored `.env.personal` file containing `VITE_SITE_ORIGIN=https://your-domain.example`, using your own HTTPS origin without a trailing slash. This overrides the tracked `.env` demo default through Vite's native mode-specific loading. Personal mode requires `.env.personal`, `.env.personal.local`, or an explicit `VITE_SITE_ORIGIN` build-environment override. Set the value in that override before building; empty mode files would still inherit the generic `.env` default.
+3. Create or keep the Git-ignored `.env.personal` containing `VITE_SITE_ORIGIN=https://your-domain.example`, using your own HTTPS origin without a trailing slash. An empty file is insufficient. `.env` stays the tracked demo configuration. `.local` files are not loaded or supported.
 4. Check the types with `pnpm lint`. When present, the personal TypeScript file is included in that check.
 5. Run the explicit personal commands:
 
@@ -30,9 +30,9 @@ Personal builds write to `dist-personal/`, separately from the demo. Personal mo
 
 Vite resolves `@/data/cards` to exactly one dataset at build time. TypeScript resolves that import to the tracked demo module for its shared contract; it also checks the personal file independently when present. There is no runtime fetch or glob import of personal data.
 
-Vite substitutes `%VITE_SITE_ORIGIN%` directly in the initial HTML. `loadEnv` in the Vite configuration only validates that the value is a clean HTTPS origin; no custom HTML replacement plugin is used. `VITE_` values are public to the browser, so never use that prefix for secrets. The tracked `.env` contains only public demo defaults; keep all private settings in ignored mode-specific files. Restart the dev server after changing environment files.
+The Vite configuration reads exactly `.env` for demo mode or `.env.personal` for personal mode, validates the origin, and supplies it through `define`. Vite replaces both `import.meta.env.VITE_SITE_ORIGIN` in JavaScript and `%VITE_SITE_ORIGIN%` in HTML; there is no custom HTML plugin. Automatic env-file loading is disabled, so `.local` files and other mode-specific files are ignored. An explicit `VITE_SITE_ORIGIN` in your shell takes precedence for development and standalone builds; unset it when switching variants to use their file values. `VITE_` values are public to the browser, so never use that prefix for secrets. Restart the dev server after changing environment files.
 
-The tracked `.env` is also the setup template: a fresh clone builds without extra steps. `.env.example` is not loaded by Vite and would duplicate that file, so it is intentionally absent. Personal overrides belong only in ignored mode-specific files such as `.env.personal`.
+The tracked `.env` is also the setup template: a fresh clone builds without extra steps. `.env.example` would duplicate that file, so it is intentionally absent. The supported setup is only `.env` for demo configuration and `.env.personal` for personal configuration. Personal mode never inherits `.env` defaults.
 
 Application code imports `{ AppConfig }` from `@/config` instead of reading environment variables directly. `AppConfig.site` is a readonly string returned by the shared site-origin parser; `AppConfig.isPersonal` is a readonly boolean derived from Vite's built-in mode. There are no custom environment type declarations or unchecked value casts. Vite uses the same parser to validate static HTML inputs before the app runs, and `AppConfig` uses it again for the browser bundle, so both paths reject the same malformed values. Configuration is build-time, not runtime-editable deployment settings.
 
@@ -50,19 +50,19 @@ A required setting with no safe fallback, such as the site origin, keeps its ded
 
 ## What stays out of Git
 
-The personal source, `.env.personal`, and `dist-personal/` are ignored. Verify before committing:
+The personal source, personal environment files, `wrangler.personal.jsonc`, and `dist-personal/` are ignored. Verify before committing:
 
 ```sh
-git check-ignore src/data/cards.personal.ts .env.personal dist-personal/
+git check-ignore src/data/cards.personal.ts .env.personal wrangler.personal.jsonc dist-personal/
 git status --short
 ```
 
 Do not force-add ignored files or put real banking details in the demo module. Ignoring a file does not remove data from older commits; never publish history containing sensitive information.
 
-Keep secure backups of your local configuration outside Git. A fresh clone will not contain it. A remote build also will not have it unless separately provisioned; a local personal build can consume it without committing or uploading the source file.
+Keep secure backups of your local configuration outside Git. A fresh clone will not contain it. Personal builds and deployments run only on your machine; there is no personal GitHub Actions workflow or personal data secret. Edit the ignored card file and rebuild/redeploy whenever transfer details change, without creating a code commit or release.
 
 ## Publication boundary
 
 Only `dist/` is the public-demo output. `dist-personal/` contains real transfer details intentionally delivered to visitors of the personal site. Anyone with access to that site can inspect those details, including its JavaScript bundle. Neither a private repository nor build-time configuration provides website access control. Never store passwords, banking credentials, private keys, or access tokens in either dataset.
 
-Cloudflare Pages/Wrangler deployment configuration is planned for the demo. For any customized deployment, provision your own ignored configuration and choose its deployment target explicitly. Do not upload personal output to a demo project.
+Cloudflare Pages uses separate static projects for the demo and personal site. The demo's Wrangler configuration is tracked; local personal deployment explicitly supplies its project name and output directory. Keep personal project identifiers and domains out of tracked scripts and documentation. See the [Cloudflare Pages deployment guide](cloudflare-pages.md) for project setup, stable versions, and rollback. Never upload personal output to the demo project.

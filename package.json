@@ -8,6 +8,8 @@
     "dev:personal": "vite --mode personal --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "build:personal": "vite build --mode personal",
+    "deploy": "pnpm build && wrangler pages deploy dist --project-name capa-wallet",
+    "deploy:personal": "node --experimental-strip-types scripts/deploy-personal.ts",
     "preview": "vite preview",
     "preview:personal": "vite preview --mode personal",
     "clean": "rm -rf dist dist-personal server.js",
@@ -33,6 +35,7 @@
     "autoprefixer": "^10.4.21",
     "esbuild": "^0.25.0",
     "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "wrangler": "^4.152.0"
   }
 }
