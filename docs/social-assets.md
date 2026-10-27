@@ -4,14 +4,12 @@ The Dynamic Deck brand kit supplies one app-wide social preview. Its illustrated
 
 ## Assets
 
-- `public/social/capa-wallet-og.png`: canonical 1200 × 630 Open Graph and Twitter/X image. Both metadata entries use this same landscape asset, independent of viewport or selected card.
-- `public/social/capa-wallet-og.jpg` and `capa-wallet-og-small.png`: compressed JPEG and 600 × 315 alternatives for manual use.
-- `public/social/capa-wallet-square.png`, `capa-wallet-square-1080.png`, `capa-wallet-portrait-1080x1350.png`, and `capa-wallet-story-1080x1920.png`: separately composed manual-post exports. They are not loaded into the app's visible UI.
-- `public/icons/header-icon-128.png`: transparent decorative header logo, rendered at 24–28 CSS pixels. Additional supplied sizes and `wallet-mark.svg` are retained as ready-to-use brand variants.
-- `public/favicon.svg`, `favicon.ico`, and `icons/favicon-*.png`: browser-tab variants.
-- `public/apple-touch-icon.png` and `icons/app-icon-*.png`: retained bookmark and brand assets. No web app manifest or service worker is provided; the site is not offered as an installable PWA.
+- `public/social/capa-wallet-og.jpg`: canonical 1200 × 630 Open Graph and Twitter/X image, 165,304 bytes (below 300 KB). Both metadata entries use this same landscape asset, independent of viewport or selected card.
+- `public/favicon.svg` and `public/favicon.ico`: browser-tab icon and fallback.
+- `public/apple-touch-icon.png`: 180 × 180 Apple bookmark/home-screen icon. No web app manifest or service worker is provided; the site is not offered as an installable PWA.
+- `public/robots.txt` and `public/_headers`: crawler instructions and Cloudflare Pages indexing headers, described below.
 
-The supplied public assets are kept byte-for-byte. Source masters, import instructions, previews, and the consumed archive are not needed by the application.
+The header renders Lucide's `CreditCard` icon rather than a public image. Unused PNG preview alternatives, manual-post exports, and icon variants have been removed from `public/`; earlier versions remain recoverable from Git history. The retained image files are unchanged.
 
 ## Initial HTML and production origins
 
